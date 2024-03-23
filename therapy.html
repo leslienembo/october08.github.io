@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudotherapy</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #ffffff; /* Text color on the homepage */
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 28%;
+            transform: translate(-50%, -50%);
+        }
+
+        .home-button{
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bolder;
+            border-radius: 5px;
+            position:fixed;
+            top: 10px;
+            left: 0px;
+            background-color: none; 
+            color:black; 
+            text-decoration: none;
+        }
+
+        #beginButton{
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bolder;
+            border-radius: 5px;
+            position:fixed;
+            top: 60vh;
+            left: 35vw;
+            background-color: whitesmoke; 
+            color:black; 
+            text-decoration: none;
+        }
+
+        #popupContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            font-size: 15px;
+            font-weight: bolder;
+            border-radius: 5px;
+            transform: translate(-50%, -50%);
+            color:black;
+            background-color: whitesmoke;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        #closeButton {
+            color:black;
+            background-color: whitesmoke;
+            border: none;
+            padding: 0px;
+            font-size: 14px;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        input {
+            margin: 5px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="home-button">&#10119</a>
+
+    <button id="beginButton" onclick="beginSession()">Start Here</button>
+
+    <div id="popupContainer">
+        <button id="closeButton" onclick="closePopup()">X</button>
+    <br>
+    <label for="textField1">movie</label>
+    <input type="text" id="textField1" placeholder="movie title" readonly>
+    <br>
+    <br>
+    <label for="textField2">album</label>
+    <input type="text" id="textField2" placeholder="album title" readonly>
+    <br>
+    </div>
+
+    <script>
+        function beginSession() {
+            //question 1
+            const name = prompt("Enter your name");
+            //question 2
+            const location = prompt("Enter your location (country/city)");
+            //question 3
+            let age;
+            do {
+                const ageInput = prompt("Enter your age");
+                age = parseInt(ageInput);
+                if (isNaN(age)) {
+                    alert("Please enter a valid number for age.");
+                }
+            } while (isNaN(age));
+
+            //question 4
+            const zodiacOptions = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+            let zodiac;
+            do {
+                const zodiacInput = prompt("Enter your zodiac sign");
+                zodiac = zodiacInput.toLowerCase();
+                if (!zodiacOptions.includes(zodiac)) {
+                    alert("Enter a valid zodiac sign.");
+                } 
+            } while (!zodiacOptions.includes(zodiac));
+            
+            //question 5
+            const rationality = prompt("Is the earth flat");
+            
+            //question 6
+            const mentalStates = ["guilt", "grief", "fear", "loneliness", "regret"];
+            let mental;
+            do {
+                const mentalInput = prompt("What is your least desirable mental state from the following; Guilt, Grief, Fear, Loneliness, Regret");
+                mental = mentalInput.toLowerCase();
+                if (!mentalStates.includes(mental)) {
+                    alert("Enter a valid mental state.");
+                }
+            } while (!mentalStates.includes(mental));
+            
+            //question 7
+            const auraOptions = ["red","yellow","green","blue","white","black"]
+            let aura;
+            do {
+                const auraInput = prompt("How will you potray yourself perception through the objective perspective of a third person observer using one of these six colors; Red, Yellow, Green, Blue, White, Black");
+                aura = auraInput.toLowerCase();
+                if (!auraOptions.includes(aura)) {
+                    alert("Enter a valid option (Red, Yellow, Green, Blue, White, or Black).");
+                }
+            } while (!auraOptions.includes(aura));
+            
+            //question 8
+            let dream;
+            do {
+                const dreamInput = prompt("On a scale of 1 - 10, how likely are you to distinguish a distorted reality by engaging with nature and its ontological significance?");
+                dream = parseInt(dreamInput);
+                if (isNaN(dream) || dream > 10 || dream <= 0) {
+                    alert("Please enter a valid number.");
+                }
+            } while (isNaN(dream) || dream > 10 || dream <= 0);
+            
+            //question 9
+            const art = prompt("What is makes art 'good'?");
+            
+            // normalize responses
+            normalizeAge(age);
+            normalizeZodiac(zodiac);
+            normalizeMental(mental);
+            normalizeAura(aura);
+            normalizeDream(dream);
+
+            getRecommendations(normalizeAge, normalizeZodiac, normalizeMental, normalizeAura, normalizeDream);
+            userMovie = getRecommendations[0];
+            userAlbum = getRecommendations[1];
+
+            document.getElementById('textField1').value = userMovie;
+            document.getElementById('textField2').value = userAlbum;
+
+            openPopup();
+        }
+
+        function normalizeAge(age){
+                //convert age into ranges
+                if (age <= 23){
+                    normalizeAge = "low";
+                } else if (age <= 30){
+                    normalizeAge = "medium";
+                } else{
+                    normalizeAge = "high";
+                }
+        }
+
+        function normalizeZodiac(zodiac){
+                //convert zodiac into ranges
+                if (zodiac == "scorpio" || zodiac == "virgo" || zodiac == "capicorn" || "cancer" ){
+                    normalizeZodiac = "low";
+                } else if (zodiac == "taurus" || zodiac == "aquarius" || zodiac == "libra" || "gemini"){
+                    normalizeZodiac = "medium";
+                } else{
+                    normalizeZodiac = "high";
+                }
+        }
+
+        function normalizeMental(mental){
+                //convert mental into ranges
+                if (mental == "fear" || mental == "loneliness"){
+                    normalizeMental = "low";
+                } else if (mental == "guilt" || mental == "grief"){
+                    normalizeMental = "medium";
+                } else{
+                    normalizeMental = "high";
+                }
+        }
+
+        function normalizeAura(aura){
+                //convert aura into ranges
+                if (aura == "red" || aura == "blue"){
+                    normalizeAura = "low";
+                } else if (aura == "white" || aura == "green"){
+                    normalizeAura = "medium";
+                } else{
+                    normalizeAura = "high";
+                }
+        }
+
+        function normalizeDream(dream){
+                //convert dream into ranges
+                if (dream <= 3){
+                    normalizeDream = "high";
+                } else if (dream <= 7){
+                    normalizeDream = "medium";
+                } else{
+                    normalizeDream = "low";
+                }
+        }
+
+        function getRecommendations(normalizeAge, normalizeZodiac, normalizeMental, normalizeAura, normalizeDream){
+            //get recommendations
+                 const referenceData = {
+                    "lowAgelowZodiaclowMentallowAuralowDream":"1",
+                    "lowAgelowZodiaclowMentallowAuramediumDream":"2",
+                    "lowAgelowZodiaclowMentallowAurahighDream":"3",
+                    "lowAgelowZodiaclowMentalmediumAuralowDream":"4",
+                    "lowAgelowZodiaclowMentalmediumAuramediumDream":"5",
+                    "lowAgelowZodiaclowMentalmediumAurahighDream":"6",
+                    "lowAgelowZodiaclowMentalhighAuralowDream":"7",
+                    "lowAgelowZodiaclowMentalhighAuramediumDream":"8",
+                    "lowAgelowZodiaclowMentalhighAurahighDream":"9",
+                    "lowAgelowZodiacmediumMentallowAuralowDream":"10",
+                    "lowAgelowZodiacmediumMentallowAuramediumDream":"11",
+                    "lowAgelowZodiacmediumMentallowAurahighDream":"12",
+                    "lowAgelowZodiacmediumMentalmediumAuralowDream":"13",
+                    "lowAgelowZodiacmediumMentalmediumAuramediumDream":"14",
+                    "lowAgelowZodiacmediumMentalmediumAurahighDream":"15",
+                    "lowAgelowZodiacmediumMentalhighAuralowDream":"16",
+                    "lowAgelowZodiacmediumMentalhighAuramediumDream":"17",
+                    "lowAgelowZodiacmediumMentalhighAurahighDream":"18",
+                    "lowAgelowZodiachighMentallowAuralowDream":"19",
+                    "lowAgelowZodiachighMentallowAuramediumDream":"20",
+                    "lowAgelowZodiachighMentallowAurahighDream":"21",
+                    "lowAgelowZodiachighMentalmediumAuralowDream":"22",
+                    "lowAgelowZodiachighMentalmediumAuramediumDream":"23",
+                    "lowAgelowZodiachighMentalmediumAurahighDream":"24",
+                    "lowAgelowZodiachighMentalhighAuralowDream":"25",
+                    "lowAgelowZodiachighMentalhighAuramediumDream":"26",
+                    "lowAgelowZodiachighMentalhighAurahighDream":"27",
+                    "lowAgemediumZodiaclowMentallowAuralowDream":"28",
+                    "lowAgemediumZodiaclowMentallowAuramediumDream":"29",
+                    "lowAgemediumZodiaclowMentallowAurahighDream":"30",
+                    "lowAgemediumZodiaclowMentalmediumAuralowDream":"31",
+                    "lowAgemediumZodiaclowMentalmediumAuramediumDream":"32",
+                    "lowAgemediumZodiaclowMentalmediumAurahighDream":"33",
+                    "lowAgemediumZodiaclowMentalhighAuralowDream":"34",
+                    "lowAgemediumZodiaclowMentalhighAuramediumDream":"35",
+                    "lowAgemediumZodiaclowMentalhighAurahighDream":"36",
+                    "lowAgemediumZodiacmediumMentallowAuralowDream":"37",
+                    "lowAgemediumZodiacmediumMentallowAuramediumDream":"38",
+                    "lowAgemediumZodiacmediumMentallowAurahighDream":"39",
+                    "lowAgemediumZodiacmediumMentalmediumAuralowDream":"40",
+                    "lowAgemediumZodiacmediumMentalmediumAuramediumDream":"41",
+                    "lowAgemediumZodiacmediumMentalmediumAurahighDream":"42",
+                    "lowAgemediumZodiacmediumMentalhighAuralowDream":"43",
+                    "lowAgemediumZodiacmediumMentalhighAuramediumDream":"44",
+                    "lowAgemediumZodiacmediumMentalhighAurahighDream":"45",
+                    "lowAgemediumZodiachighMentallowAuralowDream":"46",
+                    "lowAgemediumZodiachighMentallowAuramediumDream":"47",
+                    "lowAgemediumZodiachighMentallowAurahighDream":"48",
+                    "lowAgemediumZodiachighMentalmediumAuralowDream":"49",
+                    "lowAgemediumZodiachighMentalmediumAuramediumDream":"50",
+                    "lowAgemediumZodiachighMentalmediumAurahighDream":"51",
+                    "lowAgemediumZodiachighMentalhighAuralowDream":"52",
+                    "lowAgemediumZodiachighMentalhighAuramediumDream":"53",
+                    "lowAgemediumZodiachighMentalhighAurahighDream":"54",
+                    "lowAgehighZodiaclowMentallowAuralowDream":"55",
+                    "lowAgehighZodiaclowMentallowAuramediumDream":"56",
+                    "lowAgehighZodiaclowMentallowAurahighDream":"57",
+                    "lowAgehighZodiaclowMentalmediumAuralowDream":"58",
+                    "lowAgehighZodiaclowMentalmediumAuramediumDream":"59",
+                    "lowAgehighZodiaclowMentalmediumAurahighDream":"60",
+                    "lowAgehighZodiaclowMentalhighAuralowDream":"61",
+                    "lowAgehighZodiaclowMentalhighAuramediumDream":"62",
+                    "lowAgehighZodiaclowMentalhighAurahighDream":"63",
+                    "lowAgehighZodiacmediumMentallowAuralowDream":"64",
+                    "lowAgehighZodiacmediumMentallowAuramediumDream":"65",
+                    "lowAgehighZodiacmediumMentallowAurahighDream":"66",
+                    "lowAgehighZodiacmediumMentalmediumAuralowDream":"67",
+                    "lowAgehighZodiacmediumMentalmediumAuramediumDream":"68",
+                    "lowAgehighZodiacmediumMentalmediumAurahighDream":"69",
+                    "lowAgehighZodiacmediumMentalhighAuralowDream":"70",
+                    "lowAgehighZodiacmediumMentalhighAuramediumDream":"71",
+                    "lowAgehighZodiacmediumMentalhighAurahighDream":"72",
+                    "lowAgehighZodiachighMentallowAuralowDream":"73",
+                    "lowAgehighZodiachighMentallowAuramediumDream":"74",
+                    "lowAgehighZodiachighMentallowAurahighDream":"75",
+                    "lowAgehighZodiachighMentalmediumAuralowDream":"76",
+                    "lowAgehighZodiachighMentalmediumAuramediumDream":"77",
+                    "lowAgehighZodiachighMentalmediumAurahighDream":"78",
+                    "lowAgehighZodiachighMentalhighAuralowDream":"79",
+                    "lowAgehighZodiachighMentalhighAuramediumDream":"80",
+                    "lowAgehighZodiachighMentalhighAurahighDream":"81",
+                    "mediumAgelowZodiaclowMentallowAuralowDream":"82",
+                    "mediumAgelowZodiaclowMentallowAuramediumDream":"83",
+                    "mediumAgelowZodiaclowMentallowAurahighDream":"84",
+                    "mediumAgelowZodiaclowMentalmediumAuralowDream":"85",
+                    "mediumAgelowZodiaclowMentalmediumAuramediumDream":"86",
+                    "mediumAgelowZodiaclowMentalmediumAurahighDream":"87",
+                    "mediumAgelowZodiaclowMentalhighAuralowDream":"88",
+                    "mediumAgelowZodiaclowMentalhighAuramediumDream":"89",
+                    "mediumAgelowZodiaclowMentalhighAurahighDream":"90",
+                    "mediumAgelowZodiacmediumMentallowAuralowDream":"91",
+                    "mediumAgelowZodiacmediumMentallowAuramediumDream":"92",
+                    "mediumAgelowZodiacmediumMentallowAurahighDream":"93",
+                    "mediumAgelowZodiacmediumMentalmediumAuralowDream":"94",
+                    "mediumAgelowZodiacmediumMentalmediumAuramediumDream":"95",
+                    "mediumAgelowZodiacmediumMentalmediumAurahighDream":"96",
+                    "mediumAgelowZodiacmediumMentalhighAuralowDream":"97",
+                    "mediumAgelowZodiacmediumMentalhighAuramediumDream":"98",
+                    "mediumAgelowZodiacmediumMentalhighAurahighDream":"99",
+                    "mediumAgelowZodiachighMentallowAuralowDream":"100",
+                    "mediumAgelowZodiachighMentallowAuramediumDream":"101",
+                    "mediumAgelowZodiachighMentallowAurahighDream":"102",
+                    "mediumAgelowZodiachighMentalmediumAuralowDream":"103",
+                    "mediumAgelowZodiachighMentalmediumAuramediumDream":"104",
+                    "mediumAgelowZodiachighMentalmediumAurahighDream":"105",
+                    "mediumAgelowZodiachighMentalhighAuralowDream":"106",
+                    "mediumAgelowZodiachighMentalhighAuramediumDream":"107",
+                    "mediumAgelowZodiachighMentalhighAurahighDream":"108",
+                    "mediumAgemediumZodiaclowMentallowAuralowDream":"109",
+                    "mediumAgemediumZodiaclowMentallowAuramediumDream":"110",
+                    "mediumAgemediumZodiaclowMentallowAurahighDream":"111",
+                    "mediumAgemediumZodiaclowMentalmediumAuralowDream":"112",
+                    "mediumAgemediumZodiaclowMentalmediumAuramediumDream":"113",
+                    "mediumAgemediumZodiaclowMentalmediumAurahighDream":"114",
+                    "mediumAgemediumZodiaclowMentalhighAuralowDream":"115",
+                    "mediumAgemediumZodiaclowMentalhighAuramediumDream":"116",
+                    "mediumAgemediumZodiaclowMentalhighAurahighDream":"117",
+                    "mediumAgemediumZodiacmediumMentallowAuralowDream":"118",
+                    "mediumAgemediumZodiacmediumMentallowAuramediumDream":"119",
+                    "mediumAgemediumZodiacmediumMentallowAurahighDream":"120",
+                    "mediumAgemediumZodiacmediumMentalmediumAuralowDream":"121",
+                    "mediumAgemediumZodiacmediumMentalmediumAuramediumDream":"122",
+                    "mediumAgemediumZodiacmediumMentalmediumAurahighDream":"123",
+                    "mediumAgemediumZodiacmediumMentalhighAuralowDream":"124",
+                    "mediumAgemediumZodiacmediumMentalhighAuramediumDream":"125",
+                    "mediumAgemediumZodiacmediumMentalhighAurahighDream":"126",
+                    "mediumAgemediumZodiachighMentallowAuralowDream":"127",
+                    "mediumAgemediumZodiachighMentallowAuramediumDream":"128",
+                    "mediumAgemediumZodiachighMentallowAurahighDream":"129",
+                    "mediumAgemediumZodiachighMentalmediumAuralowDream":"130",
+                    "mediumAgemediumZodiachighMentalmediumAuramediumDream":"131",
+                    "mediumAgemediumZodiachighMentalmediumAurahighDream":"132",
+                    "mediumAgemediumZodiachighMentalhighAuralowDream":"133",
+                    "mediumAgemediumZodiachighMentalhighAuramediumDream":"134",
+                    "mediumAgemediumZodiachighMentalhighAurahighDream":"135",
+                    "mediumAgehighZodiaclowMentallowAuralowDream":"136",
+                    "mediumAgehighZodiaclowMentallowAuramediumDream":"137",
+                    "mediumAgehighZodiaclowMentallowAurahighDream":"138",
+                    "mediumAgehighZodiaclowMentalmediumAuralowDream":"139",
+                    "mediumAgehighZodiaclowMentalmediumAuramediumDream":"140",
+                    "mediumAgehighZodiaclowMentalmediumAurahighDream":"141",
+                    "mediumAgehighZodiaclowMentalhighAuralowDream":"142",
+                    "mediumAgehighZodiaclowMentalhighAuramediumDream":"143",
+                    "mediumAgehighZodiaclowMentalhighAurahighDream":"144",
+                    "mediumAgehighZodiacmediumMentallowAuralowDream":"145",
+                    "mediumAgehighZodiacmediumMentallowAuramediumDream":"146",
+                    "mediumAgehighZodiacmediumMentallowAurahighDream":"147",
+                    "mediumAgehighZodiacmediumMentalmediumAuralowDream":"148",
+                    "mediumAgehighZodiacmediumMentalmediumAuramediumDream":"149",
+                    "mediumAgehighZodiacmediumMentalmediumAurahighDream":"150",
+                    "mediumAgehighZodiacmediumMentalhighAuralowDream":"151",
+                    "mediumAgehighZodiacmediumMentalhighAuramediumDream":"152",
+                    "mediumAgehighZodiacmediumMentalhighAurahighDream":"153",
+                    "mediumAgehighZodiachighMentallowAuralowDream":"154",
+                    "mediumAgehighZodiachighMentallowAuramediumDream":"155",
+                    "mediumAgehighZodiachighMentallowAurahighDream":"156",
+                    "mediumAgehighZodiachighMentalmediumAuralowDream":"157",
+                    "mediumAgehighZodiachighMentalmediumAuramediumDream":"158",
+                    "mediumAgehighZodiachighMentalmediumAurahighDream":"159",
+                    "mediumAgehighZodiachighMentalhighAuralowDream":"160",
+                    "mediumAgehighZodiachighMentalhighAuramediumDream":"161",
+                    "mediumAgehighZodiachighMentalhighAurahighDream":"162",
+                    "highAgelowZodiaclowMentallowAuralowDream":"163",
+                    "highAgelowZodiaclowMentallowAuramediumDream":"164",
+                    "highAgelowZodiaclowMentallowAurahighDream":"165",
+                    "highAgelowZodiaclowMentalmediumAuralowDream":"166",
+                    "highAgelowZodiaclowMentalmediumAuramediumDream":"167",
+                    "highAgelowZodiaclowMentalmediumAurahighDream":"168",
+                    "highAgelowZodiaclowMentalhighAuralowDream":"169",
+                    "highAgelowZodiaclowMentalhighAuramediumDream":"170",
+                    "highAgelowZodiaclowMentalhighAurahighDream":"171",
+                    "highAgelowZodiacmediumMentallowAuralowDream":"172",
+                    "highAgelowZodiacmediumMentallowAuramediumDream":"173",
+                    "highAgelowZodiacmediumMentallowAurahighDream":"174",
+                    "highAgelowZodiacmediumMentalmediumAuralowDream":"175",
+                    "highAgelowZodiacmediumMentalmediumAuramediumDream":"176",
+                    "highAgelowZodiacmediumMentalmediumAurahighDream":"177",
+                    "highAgelowZodiacmediumMentalhighAuralowDream":"178",
+                    "highAgelowZodiacmediumMentalhighAuramediumDream":"179",
+                    "highAgelowZodiacmediumMentalhighAurahighDream":"180",
+                    "highAgelowZodiachighMentallowAuralowDream":"181",
+                    "highAgelowZodiachighMentallowAuramediumDream":"182",
+                    "highAgelowZodiachighMentallowAurahighDream":"183",
+                    "highAgelowZodiachighMentalmediumAuralowDream":"184",
+                    "highAgelowZodiachighMentalmediumAuramediumDream":"185",
+                    "highAgelowZodiachighMentalmediumAurahighDream":"186",
+                    "highAgelowZodiachighMentalhighAuralowDream":"187",
+                    "highAgelowZodiachighMentalhighAuramediumDream":"188",
+                    "highAgelowZodiachighMentalhighAurahighDream":"189",
+                    "highAgemediumZodiaclowMentallowAuralowDream":"190",
+                    "highAgemediumZodiaclowMentallowAuramediumDream":"191",
+                    "highAgemediumZodiaclowMentallowAurahighDream":"192",
+                    "highAgemediumZodiaclowMentalmediumAuralowDream":"193",
+                    "highAgemediumZodiaclowMentalmediumAuramediumDream":"194",
+                    "highAgemediumZodiaclowMentalmediumAurahighDream":"195",
+                    "highAgemediumZodiaclowMentalhighAuralowDream":"196",
+                    "highAgemediumZodiaclowMentalhighAuramediumDream":"197",
+                    "highAgemediumZodiaclowMentalhighAurahighDream":"198",
+                    "highAgemediumZodiacmediumMentallowAuralowDream":"199",
+                    "highAgemediumZodiacmediumMentallowAuramediumDream":"200",
+                    "highAgemediumZodiacmediumMentallowAurahighDream":"201",
+                    "highAgemediumZodiacmediumMentalmediumAuralowDream":"202",
+                    "highAgemediumZodiacmediumMentalmediumAuramediumDream":"203",
+                    "highAgemediumZodiacmediumMentalmediumAurahighDream":"204",
+                    "highAgemediumZodiacmediumMentalhighAuralowDream":"205",
+                    "highAgemediumZodiacmediumMentalhighAuramediumDream":"206",
+                    "highAgemediumZodiacmediumMentalhighAurahighDream":"207",
+                    "highAgemediumZodiachighMentallowAuralowDream":"208",
+                    "highAgemediumZodiachighMentallowAuramediumDream":"209",
+                    "highAgemediumZodiachighMentallowAurahighDream":"210",
+                    "highAgemediumZodiachighMentalmediumAuralowDream":"211",
+                    "highAgemediumZodiachighMentalmediumAuramediumDream":"212",
+                    "highAgemediumZodiachighMentalmediumAurahighDream":"213",
+                    "highAgemediumZodiachighMentalhighAuralowDream":"214",
+                    "highAgemediumZodiachighMentalhighAuramediumDream":"215",
+                    "highAgemediumZodiachighMentalhighAurahighDream":"216",
+                    "highAgehighZodiaclowMentallowAuralowDream":"217",
+                    "highAgehighZodiaclowMentallowAuramediumDream":"218",
+                    "highAgehighZodiaclowMentallowAurahighDream":"219",
+                    "highAgehighZodiaclowMentalmediumAuralowDream":"220",
+                    "highAgehighZodiaclowMentalmediumAuramediumDream":"221",
+                    "highAgehighZodiaclowMentalmediumAurahighDream":"222",
+                    "highAgehighZodiaclowMentalhighAuralowDream":"223",
+                    "highAgehighZodiaclowMentalhighAuramediumDream":"224",
+                    "highAgehighZodiaclowMentalhighAurahighDream":"225",
+                    "highAgehighZodiacmediumMentallowAuralowDream":"226",
+                    "highAgehighZodiacmediumMentallowAuramediumDream":"227",
+                    "highAgehighZodiacmediumMentallowAurahighDream":"228",
+                    "highAgehighZodiacmediumMentalmediumAuralowDream":"229",
+                    "highAgehighZodiacmediumMentalmediumAuramediumDream":"230",
+                    "highAgehighZodiacmediumMentalmediumAurahighDream":"231",
+                    "highAgehighZodiacmediumMentalhighAuralowDream":"232",
+                    "highAgehighZodiacmediumMentalhighAuramediumDream":"233",
+                    "highAgehighZodiacmediumMentalhighAurahighDream":"234",
+                    "highAgehighZodiachighMentallowAuralowDream":"235",
+                    "highAgehighZodiachighMentallowAuramediumDream":"236",
+                    "highAgehighZodiachighMentallowAurahighDream":"237",
+                    "highAgehighZodiachighMentalmediumAuralowDream":"238",
+                    "highAgehighZodiachighMentalmediumAuramediumDream":"239",
+                    "highAgehighZodiachighMentalmediumAurahighDream":"240",
+                    "highAgehighZodiachighMentalhighAuralowDream":"241",
+                    "highAgehighZodiachighMentalhighAuramediumDream":"242",
+                    "highAgehighZodiachighMentalhighAurahighDream":"243",
+                 }
+
+                 const string1 = "Age"; const string2 = "Zodiac"; const string3 = "Mental"; const string4 = "Aura"; const string5 = "Dream";
+                 const userResponse = normalizeAge + string1 + normalizeZodiac + string2 + normalizeMental + string3 + normalizeAura + string4 + normalizeDream + string5;
+                
+                 const rank = referenceData[userResponse];
+                 intRank = parseInt(rank);
+                 subRank = ((intRank - 1) / (243 - 1)) * (30 - 1) + 1;
+                 finRank = parseInt(subRank);
+
+                 const m1 = ["The African Desperate - Martine Syms","Another Round - Thomas Vintergerg","Rebels of the Neon God - Tsai Ming-Liang","Pusher - Nicolas Winding","I'm Thinking of Ending Things - Charlie Kaufman"];
+                 const a1 = ["In the Heart of the Moon - Ali Farka Toure","La Nuit est une Panthere - Les Louanges","Could We Be More - Kokoroko","La Grande Cantatrice Malienne - Nahawa Doumbia","Gentleman - Fela Kuti"];
+                 const m2 = ["La Belle Noiseusse - Jaques Rivette","Apples - Christos Nikou","The Experimenter - Michael Almereyda","35 Shots of Rum - Claire Denis ","The Celebration - Thomas Vintergerg"];
+                 const a2 = ["Bar Mediterraneo - Nu Genea","Dans Cette Zik - Parbleu","Straight from the Heart - Patrice Rushen","Give Me the Night - George Benson","Sinym - Sarz"];
+                 const m3 = ["Holy Motors - Leos Carax","Non-Fiction - Oliver Assayas","Yella - Christian Petzold","Dogville - Lars Von Trier","The Lobster - Yorgos Lanthimos"];
+                 const a3 = ["Pirates Choice - Orchestra Baobab","Sounds of Healing in Isolation - Spirituals","Cymande - Cymande","Psychicemotus - Yusef Lateef","24 Hours in a Disco - Kiki Gyan"];
+                 const m4 = ["Touki Bouki - Djibril Mambety","First Name: Carmen - Jean-Luc Godard","Johnny Mad Dog - Jean-Stephane Sauvaire","Fallen Leaves - Aki Kaurismaki","Poor Things - Yorgos Lanthimos"];
+                 const a4 = ["O Boso - Manu Dibango","Forevernevermore - Moodymann","Fashion Week - Death Grips","Primitive Arts - Ron Trent","Sound Signature Sounds - Theo Parrish"];
+                 const m5 = ["The Image Book - Jean-Luc Godard","The House that Jack Built - Lars Von Trier","The Mother and the Whore - Jean Eustache","The Idiots - Lars Von Trier","Climax - Gaspar Noe"];
+                 const a5 = ["Music has the right to children - Boards of Canada","Wave - Antonio Jobim","Signalling the Stars - Lunar Testing Lab","Morning/Evening - Four Tet","Worotan - Oumou Sangare"];
+                 
+                 
+                 if (finRank <= 30){
+                    const movieIndex = Math.floor(Math.random() * m1.length);
+                    var movie = m1[movieIndex];
+
+                    const albumIndex = Math.floor(Math.random() * a1.length);
+                    var album = a1[albumIndex];
+                 }else if (finRank <= 24){
+                    const movieIndex = Math.floor(Math.random() * m2.length);
+                    var movie = m2[movieIndex];
+
+                    const albumIndex = Math.floor(Math.random() * a2.length);
+                    var album = a2[albumIndex];
+                 }else if (finRank <= 18){
+                    const movieIndex = Math.floor(Math.random() * m3.length);
+                    var movie = m3[movieIndex];
+
+                    const albumIndex = Math.floor(Math.random() * a3.length);
+                    var album = a3[albumIndex];
+                 }else if (finRank <= 12){
+                    const movieIndex = Math.floor(Math.random() * m4.length);
+                    var movie = m4[movieIndex];
+
+                    const albumIndex = Math.floor(Math.random() * a4.length);
+                    var album = a4[albumIndex];
+                 }else if (finRank <= 6){
+                    const movieIndex = Math.floor(Math.random() * m5.length);
+                    var movie = m5[movieIndex];
+
+                    const albumIndex = Math.floor(Math.random() * a5.length);
+                    var album = a5[albumIndex];
+                 }else{
+                    ("INVALID");
+                 }
+
+                 getRecommendations = [movie, album];
+
+        }
+
+        function openPopup() {
+        document.getElementById('popupContainer').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popupContainer').style.display = 'none';
+    }
+    </script>
+ 
+
+
+</body>
+
+</html>
