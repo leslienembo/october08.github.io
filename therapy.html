@@ -133,10 +133,9 @@
     <script>
         function beginSession() {
             //question 1
-            const name = prompt("Enter your name");
-            //question 2
             const location = prompt("Enter your location (country/city)");
-            //question 3
+
+            //question 2
             let age;
             do {
                 const ageInput = prompt("Enter your age");
@@ -146,63 +145,72 @@
                 }
             } while (isNaN(age));
 
-            //question 4
-            const zodiacOptions = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
-            let zodiac;
-            do {
-                const zodiacInput = prompt("Enter your zodiac sign");
-                zodiac = zodiacInput.toLowerCase();
-                if (!zodiacOptions.includes(zodiac)) {
-                    alert("Enter a valid zodiac sign.");
-                } 
-            } while (!zodiacOptions.includes(zodiac));
+            //break1
+            const break1 = prompt("Describe your favorite memory using a color/shape pair. For example green/square");
+
+            //break2
+            const break2 = prompt("Describe your traumatic experience using a color/shape pair.");
             
-            //question 5
-            const rationality = prompt("Is the earth flat");
-            
-            //question 6
-            const mentalStates = ["guilt", "grief", "fear", "loneliness", "regret"];
-            let mental;
+            //question 3
+            let identity;
             do {
-                const mentalInput = prompt("What is your least desirable mental state from the following; Guilt, Grief, Fear, Loneliness, Regret");
-                mental = mentalInput.toLowerCase();
-                if (!mentalStates.includes(mental)) {
-                    alert("Enter a valid mental state.");
-                }
-            } while (!mentalStates.includes(mental));
-            
-            //question 7
-            const auraOptions = ["red","yellow","green","blue","white","black"]
-            let aura;
-            do {
-                const auraInput = prompt("How would you portray your self-perception through the objective perspective of a third person observer using one of these six colors; Red, Yellow, Green, Blue, White, Black");
-                aura = auraInput.toLowerCase();
-                if (!auraOptions.includes(aura)) {
-                    alert("Enter a valid option (Red, Yellow, Green, Blue, White, or Black).");
-                }
-            } while (!auraOptions.includes(aura));
-            
-            //question 8
-            let dream;
-            do {
-                const dreamInput = prompt("On a scale of 1 - 10, how likely are you to distinguish a distorted reality by engaging with nature and its ontological significance?");
-                dream = parseInt(dreamInput);
-                if (isNaN(dream) || dream > 10 || dream <= 0) {
+                const identityInput = prompt("How well do you feel your current self-image aligns with how you want to be perceived by others, with 1 being ``not at all aligned`` and 10 being ``perfectly aligned``?");
+                identity = parseInt(identityInput);
+                if (isNaN(identity) || identity > 10 || identity <= 0) {
                     alert("Please enter a valid number.");
                 }
-            } while (isNaN(dream) || dream > 10 || dream <= 0);
+            } while (isNaN(identity) || identity > 10 || identity <= 0);
             
-            //question 9
-            const art = prompt("What makes art 'good'?");
+            //question 4
+            let ego;
+            do {
+                const egoInput = prompt("Rate how much you feel that your self-esteem is dependent on others' admiration or validation, where 1 is ``not at all dependent`` and 10 is ``completely dependent.``");
+                ego = parseInt(egoInput);
+                if (isNaN(ego) || ego > 10 || ego <= 0) {
+                    alert("Please enter a valid number.");
+                }
+            } while (isNaN(ego) || ego > 10 || ego <= 0);
+            
+            //question 5
+            let power;
+            do {
+                const powerInput = prompt("On a scale from 1 to 10, how much do you feel in control of your own life and decisions, with 1 being ``no control at all`` and 10 being ``complete control``?");
+                power = parseInt(powerInput);
+                if (isNaN(power) || power > 10 || power <= 0) {
+                    alert("Please enter a valid number.");
+                }
+            } while (isNaN(power) || power > 10 || power <= 0);
+            
+            //question 6
+            let sex;
+            do {
+                const sexInput = prompt("How would you rate the extent to which your sexual desires are fulfilled in your current relationship or life situation, where 1 is ``not at all fulfilled`` and 10 is ``fully fulfilled``?");
+                sex = parseInt(sexInput);
+                if (isNaN(sex) || sex > 10 || sex <= 0) {
+                    alert("Please enter a valid number.");
+                }
+            } while (isNaN(sex) || sex > 10 || sex <= 0);
+
+            //question 7
+            let objects;
+            do {
+                const objectsInput = prompt("On a scale from 1 to 10, how satisfied are you with the material possessions and consumer goods you have, with 1 being ``not at all satisfied`` and 10 being ``completely satisfied``?");
+                objects = parseInt(objectsInput);
+                if (isNaN(objects) || objects > 10 || objects <= 0) {
+                    alert("Please enter a valid number.");
+                }
+            } while (isNaN(objects) || objects > 10 || objects <= 0);
+            
             
             // normalize responses
             normalizeAge(age);
-            normalizeZodiac(zodiac);
-            normalizeMental(mental);
-            normalizeAura(aura);
-            normalizeDream(dream);
+            normalizeIdentity(identity);
+            normalizeEgo(ego);
+            normalizePower(power);
+            normalizeSex(sex);
+            normalizeObjects(objects);
 
-            getRecommendations(normalizeAge, normalizeZodiac, normalizeMental, normalizeAura, normalizeDream);
+            getRecommendations(normalizeSex, normalizeEgo, normalizeIdentity, normalizePower, normalizeObjects);
             userMovie = getRecommendations[0];
             userAlbum = getRecommendations[1];
 
@@ -223,300 +231,306 @@
                 }
         }
 
-        function normalizeZodiac(zodiac){
-                //convert zodiac into ranges
-                if (zodiac == "scorpio" || zodiac == "virgo" || zodiac == "capicorn" || "cancer" ){
-                    normalizeZodiac = "low";
-                } else if (zodiac == "taurus" || zodiac == "aquarius" || zodiac == "libra" || "gemini"){
-                    normalizeZodiac = "medium";
+        function normalizeIdentity(identity){
+               if (identity <= 3){
+                    normalizeIdentity = "high";
+                } else if (identity <= 7){
+                    normalizeIdentity = "medium";
                 } else{
-                    normalizeZodiac = "high";
+                    normalizeIdentity = "low";
                 }
         }
 
-        function normalizeMental(mental){
-                //convert mental into ranges
-                if (mental == "fear" || mental == "loneliness"){
-                    normalizeMental = "low";
-                } else if (mental == "guilt" || mental == "grief"){
-                    normalizeMental = "medium";
+        function normalizeEgo(ego){
+            if (ego <= 3){
+                    normalizeEgo = "high";
+                } else if (ego <= 7){
+                    normalizeEgo = "medium";
                 } else{
-                    normalizeMental = "high";
+                    normalizeEgo = "low";
                 }
         }
 
-        function normalizeAura(aura){
-                //convert aura into ranges
-                if (aura == "red" || aura == "blue"){
-                    normalizeAura = "low";
-                } else if (aura == "white" || aura == "green"){
-                    normalizeAura = "medium";
+        function normalizePower(power){
+            if (power <= 3){
+                    normalizePower = "high";
+                } else if (power <= 7){
+                    normalizePower = "medium";
                 } else{
-                    normalizeAura = "high";
+                    normalizePower = "low";
                 }
         }
 
-        function normalizeDream(dream){
-                //convert dream into ranges
-                if (dream <= 3){
-                    normalizeDream = "high";
-                } else if (dream <= 7){
-                    normalizeDream = "medium";
+        function normalizeSex(sex){
+            if (sex <= 3){
+                    normalizeSex = "high";
+                } else if (sex <= 7){
+                    normalizeSex = "medium";
                 } else{
-                    normalizeDream = "low";
-                }
+                    normalizeSex = "low";
+                } 
+        }
+
+        function normalizeObjects(objects){
+            if (objects <= 3){
+                    normalizeObjects = "high";
+                } else if (objects <= 7){
+                    normalizeObjects = "medium";
+                } else{
+                    normalizeObjects = "low";
+                } 
         }
 
         function getRecommendations(normalizeAge, normalizeZodiac, normalizeMental, normalizeAura, normalizeDream){
             //get recommendations
                  const referenceData = {
-                    "lowAgelowZodiaclowMentallowAuralowDream":"1",
-                    "lowAgelowZodiaclowMentallowAuramediumDream":"2",
-                    "lowAgelowZodiaclowMentallowAurahighDream":"3",
-                    "lowAgelowZodiaclowMentalmediumAuralowDream":"4",
-                    "lowAgelowZodiaclowMentalmediumAuramediumDream":"5",
-                    "lowAgelowZodiaclowMentalmediumAurahighDream":"6",
-                    "lowAgelowZodiaclowMentalhighAuralowDream":"7",
-                    "lowAgelowZodiaclowMentalhighAuramediumDream":"8",
-                    "lowAgelowZodiaclowMentalhighAurahighDream":"9",
-                    "lowAgelowZodiacmediumMentallowAuralowDream":"10",
-                    "lowAgelowZodiacmediumMentallowAuramediumDream":"11",
-                    "lowAgelowZodiacmediumMentallowAurahighDream":"12",
-                    "lowAgelowZodiacmediumMentalmediumAuralowDream":"13",
-                    "lowAgelowZodiacmediumMentalmediumAuramediumDream":"14",
-                    "lowAgelowZodiacmediumMentalmediumAurahighDream":"15",
-                    "lowAgelowZodiacmediumMentalhighAuralowDream":"16",
-                    "lowAgelowZodiacmediumMentalhighAuramediumDream":"17",
-                    "lowAgelowZodiacmediumMentalhighAurahighDream":"18",
-                    "lowAgelowZodiachighMentallowAuralowDream":"19",
-                    "lowAgelowZodiachighMentallowAuramediumDream":"20",
-                    "lowAgelowZodiachighMentallowAurahighDream":"21",
-                    "lowAgelowZodiachighMentalmediumAuralowDream":"22",
-                    "lowAgelowZodiachighMentalmediumAuramediumDream":"23",
-                    "lowAgelowZodiachighMentalmediumAurahighDream":"24",
-                    "lowAgelowZodiachighMentalhighAuralowDream":"25",
-                    "lowAgelowZodiachighMentalhighAuramediumDream":"26",
-                    "lowAgelowZodiachighMentalhighAurahighDream":"27",
-                    "lowAgemediumZodiaclowMentallowAuralowDream":"28",
-                    "lowAgemediumZodiaclowMentallowAuramediumDream":"29",
-                    "lowAgemediumZodiaclowMentallowAurahighDream":"30",
-                    "lowAgemediumZodiaclowMentalmediumAuralowDream":"31",
-                    "lowAgemediumZodiaclowMentalmediumAuramediumDream":"32",
-                    "lowAgemediumZodiaclowMentalmediumAurahighDream":"33",
-                    "lowAgemediumZodiaclowMentalhighAuralowDream":"34",
-                    "lowAgemediumZodiaclowMentalhighAuramediumDream":"35",
-                    "lowAgemediumZodiaclowMentalhighAurahighDream":"36",
-                    "lowAgemediumZodiacmediumMentallowAuralowDream":"37",
-                    "lowAgemediumZodiacmediumMentallowAuramediumDream":"38",
-                    "lowAgemediumZodiacmediumMentallowAurahighDream":"39",
-                    "lowAgemediumZodiacmediumMentalmediumAuralowDream":"40",
-                    "lowAgemediumZodiacmediumMentalmediumAuramediumDream":"41",
-                    "lowAgemediumZodiacmediumMentalmediumAurahighDream":"42",
-                    "lowAgemediumZodiacmediumMentalhighAuralowDream":"43",
-                    "lowAgemediumZodiacmediumMentalhighAuramediumDream":"44",
-                    "lowAgemediumZodiacmediumMentalhighAurahighDream":"45",
-                    "lowAgemediumZodiachighMentallowAuralowDream":"46",
-                    "lowAgemediumZodiachighMentallowAuramediumDream":"47",
-                    "lowAgemediumZodiachighMentallowAurahighDream":"48",
-                    "lowAgemediumZodiachighMentalmediumAuralowDream":"49",
-                    "lowAgemediumZodiachighMentalmediumAuramediumDream":"50",
-                    "lowAgemediumZodiachighMentalmediumAurahighDream":"51",
-                    "lowAgemediumZodiachighMentalhighAuralowDream":"52",
-                    "lowAgemediumZodiachighMentalhighAuramediumDream":"53",
-                    "lowAgemediumZodiachighMentalhighAurahighDream":"54",
-                    "lowAgehighZodiaclowMentallowAuralowDream":"55",
-                    "lowAgehighZodiaclowMentallowAuramediumDream":"56",
-                    "lowAgehighZodiaclowMentallowAurahighDream":"57",
-                    "lowAgehighZodiaclowMentalmediumAuralowDream":"58",
-                    "lowAgehighZodiaclowMentalmediumAuramediumDream":"59",
-                    "lowAgehighZodiaclowMentalmediumAurahighDream":"60",
-                    "lowAgehighZodiaclowMentalhighAuralowDream":"61",
-                    "lowAgehighZodiaclowMentalhighAuramediumDream":"62",
-                    "lowAgehighZodiaclowMentalhighAurahighDream":"63",
-                    "lowAgehighZodiacmediumMentallowAuralowDream":"64",
-                    "lowAgehighZodiacmediumMentallowAuramediumDream":"65",
-                    "lowAgehighZodiacmediumMentallowAurahighDream":"66",
-                    "lowAgehighZodiacmediumMentalmediumAuralowDream":"67",
-                    "lowAgehighZodiacmediumMentalmediumAuramediumDream":"68",
-                    "lowAgehighZodiacmediumMentalmediumAurahighDream":"69",
-                    "lowAgehighZodiacmediumMentalhighAuralowDream":"70",
-                    "lowAgehighZodiacmediumMentalhighAuramediumDream":"71",
-                    "lowAgehighZodiacmediumMentalhighAurahighDream":"72",
-                    "lowAgehighZodiachighMentallowAuralowDream":"73",
-                    "lowAgehighZodiachighMentallowAuramediumDream":"74",
-                    "lowAgehighZodiachighMentallowAurahighDream":"75",
-                    "lowAgehighZodiachighMentalmediumAuralowDream":"76",
-                    "lowAgehighZodiachighMentalmediumAuramediumDream":"77",
-                    "lowAgehighZodiachighMentalmediumAurahighDream":"78",
-                    "lowAgehighZodiachighMentalhighAuralowDream":"79",
-                    "lowAgehighZodiachighMentalhighAuramediumDream":"80",
-                    "lowAgehighZodiachighMentalhighAurahighDream":"81",
-                    "mediumAgelowZodiaclowMentallowAuralowDream":"82",
-                    "mediumAgelowZodiaclowMentallowAuramediumDream":"83",
-                    "mediumAgelowZodiaclowMentallowAurahighDream":"84",
-                    "mediumAgelowZodiaclowMentalmediumAuralowDream":"85",
-                    "mediumAgelowZodiaclowMentalmediumAuramediumDream":"86",
-                    "mediumAgelowZodiaclowMentalmediumAurahighDream":"87",
-                    "mediumAgelowZodiaclowMentalhighAuralowDream":"88",
-                    "mediumAgelowZodiaclowMentalhighAuramediumDream":"89",
-                    "mediumAgelowZodiaclowMentalhighAurahighDream":"90",
-                    "mediumAgelowZodiacmediumMentallowAuralowDream":"91",
-                    "mediumAgelowZodiacmediumMentallowAuramediumDream":"92",
-                    "mediumAgelowZodiacmediumMentallowAurahighDream":"93",
-                    "mediumAgelowZodiacmediumMentalmediumAuralowDream":"94",
-                    "mediumAgelowZodiacmediumMentalmediumAuramediumDream":"95",
-                    "mediumAgelowZodiacmediumMentalmediumAurahighDream":"96",
-                    "mediumAgelowZodiacmediumMentalhighAuralowDream":"97",
-                    "mediumAgelowZodiacmediumMentalhighAuramediumDream":"98",
-                    "mediumAgelowZodiacmediumMentalhighAurahighDream":"99",
-                    "mediumAgelowZodiachighMentallowAuralowDream":"100",
-                    "mediumAgelowZodiachighMentallowAuramediumDream":"101",
-                    "mediumAgelowZodiachighMentallowAurahighDream":"102",
-                    "mediumAgelowZodiachighMentalmediumAuralowDream":"103",
-                    "mediumAgelowZodiachighMentalmediumAuramediumDream":"104",
-                    "mediumAgelowZodiachighMentalmediumAurahighDream":"105",
-                    "mediumAgelowZodiachighMentalhighAuralowDream":"106",
-                    "mediumAgelowZodiachighMentalhighAuramediumDream":"107",
-                    "mediumAgelowZodiachighMentalhighAurahighDream":"108",
-                    "mediumAgemediumZodiaclowMentallowAuralowDream":"109",
-                    "mediumAgemediumZodiaclowMentallowAuramediumDream":"110",
-                    "mediumAgemediumZodiaclowMentallowAurahighDream":"111",
-                    "mediumAgemediumZodiaclowMentalmediumAuralowDream":"112",
-                    "mediumAgemediumZodiaclowMentalmediumAuramediumDream":"113",
-                    "mediumAgemediumZodiaclowMentalmediumAurahighDream":"114",
-                    "mediumAgemediumZodiaclowMentalhighAuralowDream":"115",
-                    "mediumAgemediumZodiaclowMentalhighAuramediumDream":"116",
-                    "mediumAgemediumZodiaclowMentalhighAurahighDream":"117",
-                    "mediumAgemediumZodiacmediumMentallowAuralowDream":"118",
-                    "mediumAgemediumZodiacmediumMentallowAuramediumDream":"119",
-                    "mediumAgemediumZodiacmediumMentallowAurahighDream":"120",
-                    "mediumAgemediumZodiacmediumMentalmediumAuralowDream":"121",
-                    "mediumAgemediumZodiacmediumMentalmediumAuramediumDream":"122",
-                    "mediumAgemediumZodiacmediumMentalmediumAurahighDream":"123",
-                    "mediumAgemediumZodiacmediumMentalhighAuralowDream":"124",
-                    "mediumAgemediumZodiacmediumMentalhighAuramediumDream":"125",
-                    "mediumAgemediumZodiacmediumMentalhighAurahighDream":"126",
-                    "mediumAgemediumZodiachighMentallowAuralowDream":"127",
-                    "mediumAgemediumZodiachighMentallowAuramediumDream":"128",
-                    "mediumAgemediumZodiachighMentallowAurahighDream":"129",
-                    "mediumAgemediumZodiachighMentalmediumAuralowDream":"130",
-                    "mediumAgemediumZodiachighMentalmediumAuramediumDream":"131",
-                    "mediumAgemediumZodiachighMentalmediumAurahighDream":"132",
-                    "mediumAgemediumZodiachighMentalhighAuralowDream":"133",
-                    "mediumAgemediumZodiachighMentalhighAuramediumDream":"134",
-                    "mediumAgemediumZodiachighMentalhighAurahighDream":"135",
-                    "mediumAgehighZodiaclowMentallowAuralowDream":"136",
-                    "mediumAgehighZodiaclowMentallowAuramediumDream":"137",
-                    "mediumAgehighZodiaclowMentallowAurahighDream":"138",
-                    "mediumAgehighZodiaclowMentalmediumAuralowDream":"139",
-                    "mediumAgehighZodiaclowMentalmediumAuramediumDream":"140",
-                    "mediumAgehighZodiaclowMentalmediumAurahighDream":"141",
-                    "mediumAgehighZodiaclowMentalhighAuralowDream":"142",
-                    "mediumAgehighZodiaclowMentalhighAuramediumDream":"143",
-                    "mediumAgehighZodiaclowMentalhighAurahighDream":"144",
-                    "mediumAgehighZodiacmediumMentallowAuralowDream":"145",
-                    "mediumAgehighZodiacmediumMentallowAuramediumDream":"146",
-                    "mediumAgehighZodiacmediumMentallowAurahighDream":"147",
-                    "mediumAgehighZodiacmediumMentalmediumAuralowDream":"148",
-                    "mediumAgehighZodiacmediumMentalmediumAuramediumDream":"149",
-                    "mediumAgehighZodiacmediumMentalmediumAurahighDream":"150",
-                    "mediumAgehighZodiacmediumMentalhighAuralowDream":"151",
-                    "mediumAgehighZodiacmediumMentalhighAuramediumDream":"152",
-                    "mediumAgehighZodiacmediumMentalhighAurahighDream":"153",
-                    "mediumAgehighZodiachighMentallowAuralowDream":"154",
-                    "mediumAgehighZodiachighMentallowAuramediumDream":"155",
-                    "mediumAgehighZodiachighMentallowAurahighDream":"156",
-                    "mediumAgehighZodiachighMentalmediumAuralowDream":"157",
-                    "mediumAgehighZodiachighMentalmediumAuramediumDream":"158",
-                    "mediumAgehighZodiachighMentalmediumAurahighDream":"159",
-                    "mediumAgehighZodiachighMentalhighAuralowDream":"160",
-                    "mediumAgehighZodiachighMentalhighAuramediumDream":"161",
-                    "mediumAgehighZodiachighMentalhighAurahighDream":"162",
-                    "highAgelowZodiaclowMentallowAuralowDream":"163",
-                    "highAgelowZodiaclowMentallowAuramediumDream":"164",
-                    "highAgelowZodiaclowMentallowAurahighDream":"165",
-                    "highAgelowZodiaclowMentalmediumAuralowDream":"166",
-                    "highAgelowZodiaclowMentalmediumAuramediumDream":"167",
-                    "highAgelowZodiaclowMentalmediumAurahighDream":"168",
-                    "highAgelowZodiaclowMentalhighAuralowDream":"169",
-                    "highAgelowZodiaclowMentalhighAuramediumDream":"170",
-                    "highAgelowZodiaclowMentalhighAurahighDream":"171",
-                    "highAgelowZodiacmediumMentallowAuralowDream":"172",
-                    "highAgelowZodiacmediumMentallowAuramediumDream":"173",
-                    "highAgelowZodiacmediumMentallowAurahighDream":"174",
-                    "highAgelowZodiacmediumMentalmediumAuralowDream":"175",
-                    "highAgelowZodiacmediumMentalmediumAuramediumDream":"176",
-                    "highAgelowZodiacmediumMentalmediumAurahighDream":"177",
-                    "highAgelowZodiacmediumMentalhighAuralowDream":"178",
-                    "highAgelowZodiacmediumMentalhighAuramediumDream":"179",
-                    "highAgelowZodiacmediumMentalhighAurahighDream":"180",
-                    "highAgelowZodiachighMentallowAuralowDream":"181",
-                    "highAgelowZodiachighMentallowAuramediumDream":"182",
-                    "highAgelowZodiachighMentallowAurahighDream":"183",
-                    "highAgelowZodiachighMentalmediumAuralowDream":"184",
-                    "highAgelowZodiachighMentalmediumAuramediumDream":"185",
-                    "highAgelowZodiachighMentalmediumAurahighDream":"186",
-                    "highAgelowZodiachighMentalhighAuralowDream":"187",
-                    "highAgelowZodiachighMentalhighAuramediumDream":"188",
-                    "highAgelowZodiachighMentalhighAurahighDream":"189",
-                    "highAgemediumZodiaclowMentallowAuralowDream":"190",
-                    "highAgemediumZodiaclowMentallowAuramediumDream":"191",
-                    "highAgemediumZodiaclowMentallowAurahighDream":"192",
-                    "highAgemediumZodiaclowMentalmediumAuralowDream":"193",
-                    "highAgemediumZodiaclowMentalmediumAuramediumDream":"194",
-                    "highAgemediumZodiaclowMentalmediumAurahighDream":"195",
-                    "highAgemediumZodiaclowMentalhighAuralowDream":"196",
-                    "highAgemediumZodiaclowMentalhighAuramediumDream":"197",
-                    "highAgemediumZodiaclowMentalhighAurahighDream":"198",
-                    "highAgemediumZodiacmediumMentallowAuralowDream":"199",
-                    "highAgemediumZodiacmediumMentallowAuramediumDream":"200",
-                    "highAgemediumZodiacmediumMentallowAurahighDream":"201",
-                    "highAgemediumZodiacmediumMentalmediumAuralowDream":"202",
-                    "highAgemediumZodiacmediumMentalmediumAuramediumDream":"203",
-                    "highAgemediumZodiacmediumMentalmediumAurahighDream":"204",
-                    "highAgemediumZodiacmediumMentalhighAuralowDream":"205",
-                    "highAgemediumZodiacmediumMentalhighAuramediumDream":"206",
-                    "highAgemediumZodiacmediumMentalhighAurahighDream":"207",
-                    "highAgemediumZodiachighMentallowAuralowDream":"208",
-                    "highAgemediumZodiachighMentallowAuramediumDream":"209",
-                    "highAgemediumZodiachighMentallowAurahighDream":"210",
-                    "highAgemediumZodiachighMentalmediumAuralowDream":"211",
-                    "highAgemediumZodiachighMentalmediumAuramediumDream":"212",
-                    "highAgemediumZodiachighMentalmediumAurahighDream":"213",
-                    "highAgemediumZodiachighMentalhighAuralowDream":"214",
-                    "highAgemediumZodiachighMentalhighAuramediumDream":"215",
-                    "highAgemediumZodiachighMentalhighAurahighDream":"216",
-                    "highAgehighZodiaclowMentallowAuralowDream":"217",
-                    "highAgehighZodiaclowMentallowAuramediumDream":"218",
-                    "highAgehighZodiaclowMentallowAurahighDream":"219",
-                    "highAgehighZodiaclowMentalmediumAuralowDream":"220",
-                    "highAgehighZodiaclowMentalmediumAuramediumDream":"221",
-                    "highAgehighZodiaclowMentalmediumAurahighDream":"222",
-                    "highAgehighZodiaclowMentalhighAuralowDream":"223",
-                    "highAgehighZodiaclowMentalhighAuramediumDream":"224",
-                    "highAgehighZodiaclowMentalhighAurahighDream":"225",
-                    "highAgehighZodiacmediumMentallowAuralowDream":"226",
-                    "highAgehighZodiacmediumMentallowAuramediumDream":"227",
-                    "highAgehighZodiacmediumMentallowAurahighDream":"228",
-                    "highAgehighZodiacmediumMentalmediumAuralowDream":"229",
-                    "highAgehighZodiacmediumMentalmediumAuramediumDream":"230",
-                    "highAgehighZodiacmediumMentalmediumAurahighDream":"231",
-                    "highAgehighZodiacmediumMentalhighAuralowDream":"232",
-                    "highAgehighZodiacmediumMentalhighAuramediumDream":"233",
-                    "highAgehighZodiacmediumMentalhighAurahighDream":"234",
-                    "highAgehighZodiachighMentallowAuralowDream":"235",
-                    "highAgehighZodiachighMentallowAuramediumDream":"236",
-                    "highAgehighZodiachighMentallowAurahighDream":"237",
-                    "highAgehighZodiachighMentalmediumAuralowDream":"238",
-                    "highAgehighZodiachighMentalmediumAuramediumDream":"239",
-                    "highAgehighZodiachighMentalmediumAurahighDream":"240",
-                    "highAgehighZodiachighMentalhighAuralowDream":"241",
-                    "highAgehighZodiachighMentalhighAuramediumDream":"242",
-                    "highAgehighZodiachighMentalhighAurahighDream":"243",
+                    "lowSexlowEgolowPowerlowIdentitylowObjects":"1",
+                    "lowSexlowEgolowPowerlowIdentitymediumObjects":"2",
+                    "lowSexlowEgolowPowerlowIdentityhighObjects":"3",
+                    "lowSexlowEgolowPowermediumIdentitylowObjects":"4",
+                    "lowSexlowEgolowPowermediumIdentitymediumObjects":"5",
+                    "lowSexlowEgolowPowermediumIdentityhighObjects":"6",
+                    "lowSexlowEgolowPowerhighIdentitylowObjects":"7",
+                    "lowSexlowEgolowPowerhighIdentitymediumObjects":"8",
+                    "lowSexlowEgolowPowerhighIdentityhighObjects":"9",
+                    "lowSexlowEgomediumPowerlowIdentitylowObjects":"10",
+                    "lowSexlowEgomediumPowerlowIdentitymediumObjects":"11",
+                    "lowSexlowEgomediumPowerlowIdentityhighObjects":"12",
+                    "lowSexlowEgomediumPowermediumIdentitylowObjects":"13",
+                    "lowSexlowEgomediumPowermediumIdentitymediumObjects":"14",
+                    "lowSexlowEgomediumPowermediumIdentityhighObjects":"15",
+                    "lowSexlowEgomediumPowerhighIdentitylowObjects":"16",
+                    "lowSexlowEgomediumPowerhighIdentitymediumObjects":"17",
+                    "lowSexlowEgomediumPowerhighIdentityhighObjects":"18",
+                    "lowSexlowEgohighPowerlowIdentitylowObjects":"19",
+                    "lowSexlowEgohighPowerlowIdentitymediumObjects":"20",
+                    "lowSexlowEgohighPowerlowIdentityhighObjects":"21",
+                    "lowSexlowEgohighPowermediumIdentitylowObjects":"22",
+                    "lowSexlowEgohighPowermediumIdentitymediumObjects":"23",
+                    "lowSexlowEgohighPowermediumIdentityhighObjects":"24",
+                    "lowSexlowEgohighPowerhighIdentitylowObjects":"25",
+                    "lowSexlowEgohighPowerhighIdentitymediumObjects":"26",
+                    "lowSexlowEgohighPowerhighIdentityhighObjects":"27",
+                    "lowSexmediumEgolowPowerlowIdentitylowObjects":"28",
+                    "lowSexmediumEgolowPowerlowIdentitymediumObjects":"29",
+                    "lowSexmediumEgolowPowerlowIdentityhighObjects":"30",
+                    "lowSexmediumEgolowPowermediumIdentitylowObjects":"31",
+                    "lowSexmediumEgolowPowermediumIdentitymediumObjects":"32",
+                    "lowSexmediumEgolowPowermediumIdentityhighObjects":"33",
+                    "lowSexmediumEgolowPowerhighIdentitylowObjects":"34",
+                    "lowSexmediumEgolowPowerhighIdentitymediumObjects":"35",
+                    "lowSexmediumEgolowPowerhighIdentityhighObjects":"36",
+                    "lowSexmediumEgomediumPowerlowIdentitylowObjects":"37",
+                    "lowSexmediumEgomediumPowerlowIdentitymediumObjects":"38",
+                    "lowSexmediumEgomediumPowerlowIdentityhighObjects":"39",
+                    "lowSexmediumEgomediumPowermediumIdentitylowObjects":"40",
+                    "lowSexmediumEgomediumPowermediumIdentitymediumObjects":"41",
+                    "lowSexmediumEgomediumPowermediumIdentityhighObjects":"42",
+                    "lowSexmediumEgomediumPowerhighIdentitylowObjects":"43",
+                    "lowSexmediumEgomediumPowerhighIdentitymediumObjects":"44",
+                    "lowSexmediumEgomediumPowerhighIdentityhighObjects":"45",
+                    "lowSexmediumEgohighPowerlowIdentitylowObjects":"46",
+                    "lowSexmediumEgohighPowerlowIdentitymediumObjects":"47",
+                    "lowSexmediumEgohighPowerlowIdentityhighObjects":"48",
+                    "lowSexmediumEgohighPowermediumIdentitylowObjects":"49",
+                    "lowSexmediumEgohighPowermediumIdentitymediumObjects":"50",
+                    "lowSexmediumEgohighPowermediumIdentityhighObjects":"51",
+                    "lowSexmediumEgohighPowerhighIdentitylowObjects":"52",
+                    "lowSexmediumEgohighPowerhighIdentitymediumObjects":"53",
+                    "lowSexmediumEgohighPowerhighIdentityhighObjects":"54",
+                    "lowSexhighEgolowPowerlowIdentitylowObjects":"55",
+                    "lowSexhighEgolowPowerlowIdentitymediumObjects":"56",
+                    "lowSexhighEgolowPowerlowIdentityhighObjects":"57",
+                    "lowSexhighEgolowPowermediumIdentitylowObjects":"58",
+                    "lowSexhighEgolowPowermediumIdentitymediumObjects":"59",
+                    "lowSexhighEgolowPowermediumIdentityhighObjects":"60",
+                    "lowSexhighEgolowPowerhighIdentitylowObjects":"61",
+                    "lowSexhighEgolowPowerhighIdentitymediumObjects":"62",
+                    "lowSexhighEgolowPowerhighIdentityhighObjects":"63",
+                    "lowSexhighEgomediumPowerlowIdentitylowObjects":"64",
+                    "lowSexhighEgomediumPowerlowIdentitymediumObjects":"65",
+                    "lowSexhighEgomediumPowerlowIdentityhighObjects":"66",
+                    "lowSexhighEgomediumPowermediumIdentitylowObjects":"67",
+                    "lowSexhighEgomediumPowermediumIdentitymediumObjects":"68",
+                    "lowSexhighEgomediumPowermediumIdentityhighObjects":"69",
+                    "lowSexhighEgomediumPowerhighIdentitylowObjects":"70",
+                    "lowSexhighEgomediumPowerhighIdentitymediumObjects":"71",
+                    "lowSexhighEgomediumPowerhighIdentityhighObjects":"72",
+                    "lowSexhighEgohighPowerlowIdentitylowObjects":"73",
+                    "lowSexhighEgohighPowerlowIdentitymediumObjects":"74",
+                    "lowSexhighEgohighPowerlowIdentityhighObjects":"75",
+                    "lowSexhighEgohighPowermediumIdentitylowObjects":"76",
+                    "lowSexhighEgohighPowermediumIdentitymediumObjects":"77",
+                    "lowSexhighEgohighPowermediumIdentityhighObjects":"78",
+                    "lowSexhighEgohighPowerhighIdentitylowObjects":"79",
+                    "lowSexhighEgohighPowerhighIdentitymediumObjects":"80",
+                    "lowSexhighEgohighPowerhighIdentityhighObjects":"81",
+                    "mediumSexlowEgolowPowerlowIdentitylowObjects":"82",
+                    "mediumSexlowEgolowPowerlowIdentitymediumObjects":"83",
+                    "mediumSexlowEgolowPowerlowIdentityhighObjects":"84",
+                    "mediumSexlowEgolowPowermediumIdentitylowObjects":"85",
+                    "mediumSexlowEgolowPowermediumIdentitymediumObjects":"86",
+                    "mediumSexlowEgolowPowermediumIdentityhighObjects":"87",
+                    "mediumSexlowEgolowPowerhighIdentitylowObjects":"88",
+                    "mediumSexlowEgolowPowerhighIdentitymediumObjects":"89",
+                    "mediumSexlowEgolowPowerhighIdentityhighObjects":"90",
+                    "mediumSexlowEgomediumPowerlowIdentitylowObjects":"91",
+                    "mediumSexlowEgomediumPowerlowIdentitymediumObjects":"92",
+                    "mediumSexlowEgomediumPowerlowIdentityhighObjects":"93",
+                    "mediumSexlowEgomediumPowermediumIdentitylowObjects":"94",
+                    "mediumSexlowEgomediumPowermediumIdentitymediumObjects":"95",
+                    "mediumSexlowEgomediumPowermediumIdentityhighObjects":"96",
+                    "mediumSexlowEgomediumPowerhighIdentitylowObjects":"97",
+                    "mediumSexlowEgomediumPowerhighIdentitymediumObjects":"98",
+                    "mediumSexlowEgomediumPowerhighIdentityhighObjects":"99",
+                    "mediumSexlowEgohighPowerlowIdentitylowObjects":"100",
+                    "mediumSexlowEgohighPowerlowIdentitymediumObjects":"101",
+                    "mediumSexlowEgohighPowerlowIdentityhighObjects":"102",
+                    "mediumSexlowEgohighPowermediumIdentitylowObjects":"103",
+                    "mediumSexlowEgohighPowermediumIdentitymediumObjects":"104",
+                    "mediumSexlowEgohighPowermediumIdentityhighObjects":"105",
+                    "mediumSexlowEgohighPowerhighIdentitylowObjects":"106",
+                    "mediumSexlowEgohighPowerhighIdentitymediumObjects":"107",
+                    "mediumSexlowEgohighPowerhighIdentityhighObjects":"108",
+                    "mediumSexmediumEgolowPowerlowIdentitylowObjects":"109",
+                    "mediumSexmediumEgolowPowerlowIdentitymediumObjects":"110",
+                    "mediumSexmediumEgolowPowerlowIdentityhighObjects":"111",
+                    "mediumSexmediumEgolowPowermediumIdentitylowObjects":"112",
+                    "mediumSexmediumEgolowPowermediumIdentitymediumObjects":"113",
+                    "mediumSexmediumEgolowPowermediumIdentityhighObjects":"114",
+                    "mediumSexmediumEgolowPowerhighIdentitylowObjects":"115",
+                    "mediumSexmediumEgolowPowerhighIdentitymediumObjects":"116",
+                    "mediumSexmediumEgolowPowerhighIdentityhighObjects":"117",
+                    "mediumSexmediumEgomediumPowerlowIdentitylowObjects":"118",
+                    "mediumSexmediumEgomediumPowerlowIdentitymediumObjects":"119",
+                    "mediumSexmediumEgomediumPowerlowIdentityhighObjects":"120",
+                    "mediumSexmediumEgomediumPowermediumIdentitylowObjects":"121",
+                    "mediumSexmediumEgomediumPowermediumIdentitymediumObjects":"122",
+                    "mediumSexmediumEgomediumPowermediumIdentityhighObjects":"123",
+                    "mediumSexmediumEgomediumPowerhighIdentitylowObjects":"124",
+                    "mediumSexmediumEgomediumPowerhighIdentitymediumObjects":"125",
+                    "mediumSexmediumEgomediumPowerhighIdentityhighObjects":"126",
+                    "mediumSexmediumEgohighPowerlowIdentitylowObjects":"127",
+                    "mediumSexmediumEgohighPowerlowIdentitymediumObjects":"128",
+                    "mediumSexmediumEgohighPowerlowIdentityhighObjects":"129",
+                    "mediumSexmediumEgohighPowermediumIdentitylowObjects":"130",
+                    "mediumSexmediumEgohighPowermediumIdentitymediumObjects":"131",
+                    "mediumSexmediumEgohighPowermediumIdentityhighObjects":"132",
+                    "mediumSexmediumEgohighPowerhighIdentitylowObjects":"133",
+                    "mediumSexmediumEgohighPowerhighIdentitymediumObjects":"134",
+                    "mediumSexmediumEgohighPowerhighIdentityhighObjects":"135",
+                    "mediumSexhighEgolowPowerlowIdentitylowObjects":"136",
+                    "mediumSexhighEgolowPowerlowIdentitymediumObjects":"137",
+                    "mediumSexhighEgolowPowerlowIdentityhighObjects":"138",
+                    "mediumSexhighEgolowPowermediumIdentitylowObjects":"139",
+                    "mediumSexhighEgolowPowermediumIdentitymediumObjects":"140",
+                    "mediumSexhighEgolowPowermediumIdentityhighObjects":"141",
+                    "mediumSexhighEgolowPowerhighIdentitylowObjects":"142",
+                    "mediumSexhighEgolowPowerhighIdentitymediumObjects":"143",
+                    "mediumSexhighEgolowPowerhighIdentityhighObjects":"144",
+                    "mediumSexhighEgomediumPowerlowIdentitylowObjects":"145",
+                    "mediumSexhighEgomediumPowerlowIdentitymediumObjects":"146",
+                    "mediumSexhighEgomediumPowerlowIdentityhighObjects":"147",
+                    "mediumSexhighEgomediumPowermediumIdentitylowObjects":"148",
+                    "mediumSexhighEgomediumPowermediumIdentitymediumObjects":"149",
+                    "mediumSexhighEgomediumPowermediumIdentityhighObjects":"150",
+                    "mediumSexhighEgomediumPowerhighIdentitylowObjects":"151",
+                    "mediumSexhighEgomediumPowerhighIdentitymediumObjects":"152",
+                    "mediumSexhighEgomediumPowerhighIdentityhighObjects":"153",
+                    "mediumSexhighEgohighPowerlowIdentitylowObjects":"154",
+                    "mediumSexhighEgohighPowerlowIdentitymediumObjects":"155",
+                    "mediumSexhighEgohighPowerlowIdentityhighObjects":"156",
+                    "mediumSexhighEgohighPowermediumIdentitylowObjects":"157",
+                    "mediumSexhighEgohighPowermediumIdentitymediumObjects":"158",
+                    "mediumSexhighEgohighPowermediumIdentityhighObjects":"159",
+                    "mediumSexhighEgohighPowerhighIdentitylowObjects":"160",
+                    "mediumSexhighEgohighPowerhighIdentitymediumObjects":"161",
+                    "mediumSexhighEgohighPowerhighIdentityhighObjects":"162",
+                    "highSexlowEgolowPowerlowIdentitylowObjects":"163",
+                    "highSexlowEgolowPowerlowIdentitymediumObjects":"164",
+                    "highSexlowEgolowPowerlowIdentityhighObjects":"165",
+                    "highSexlowEgolowPowermediumIdentitylowObjects":"166",
+                    "highSexlowEgolowPowermediumIdentitymediumObjects":"167",
+                    "highSexlowEgolowPowermediumIdentityhighObjects":"168",
+                    "highSexlowEgolowPowerhighIdentitylowObjects":"169",
+                    "highSexlowEgolowPowerhighIdentitymediumObjects":"170",
+                    "highSexlowEgolowPowerhighIdentityhighObjects":"171",
+                    "highSexlowEgomediumPowerlowIdentitylowObjects":"172",
+                    "highSexlowEgomediumPowerlowIdentitymediumObjects":"173",
+                    "highSexlowEgomediumPowerlowIdentityhighObjects":"174",
+                    "highSexlowEgomediumPowermediumIdentitylowObjects":"175",
+                    "highSexlowEgomediumPowermediumIdentitymediumObjects":"176",
+                    "highSexlowEgomediumPowermediumIdentityhighObjects":"177",
+                    "highSexlowEgomediumPowerhighIdentitylowObjects":"178",
+                    "highSexlowEgomediumPowerhighIdentitymediumObjects":"179",
+                    "highSexlowEgomediumPowerhighIdentityhighObjects":"180",
+                    "highSexlowEgohighPowerlowIdentitylowObjects":"181",
+                    "highSexlowEgohighPowerlowIdentitymediumObjects":"182",
+                    "highSexlowEgohighPowerlowIdentityhighObjects":"183",
+                    "highSexlowEgohighPowermediumIdentitylowObjects":"184",
+                    "highSexlowEgohighPowermediumIdentitymediumObjects":"185",
+                    "highSexlowEgohighPowermediumIdentityhighObjects":"186",
+                    "highSexlowEgohighPowerhighIdentitylowObjects":"187",
+                    "highSexlowEgohighPowerhighIdentitymediumObjects":"188",
+                    "highSexlowEgohighPowerhighIdentityhighObjects":"189",
+                    "highSexmediumEgolowPowerlowIdentitylowObjects":"190",
+                    "highSexmediumEgolowPowerlowIdentitymediumObjects":"191",
+                    "highSexmediumEgolowPowerlowIdentityhighObjects":"192",
+                    "highSexmediumEgolowPowermediumIdentitylowObjects":"193",
+                    "highSexmediumEgolowPowermediumIdentitymediumObjects":"194",
+                    "highSexmediumEgolowPowermediumIdentityhighObjects":"195",
+                    "highSexmediumEgolowPowerhighIdentitylowObjects":"196",
+                    "highSexmediumEgolowPowerhighIdentitymediumObjects":"197",
+                    "highSexmediumEgolowPowerhighIdentityhighObjects":"198",
+                    "highSexmediumEgomediumPowerlowIdentitylowObjects":"199",
+                    "highSexmediumEgomediumPowerlowIdentitymediumObjects":"200",
+                    "highSexmediumEgomediumPowerlowIdentityhighObjects":"201",
+                    "highSexmediumEgomediumPowermediumIdentitylowObjects":"202",
+                    "highSexmediumEgomediumPowermediumIdentitymediumObjects":"203",
+                    "highSexmediumEgomediumPowermediumIdentityhighObjects":"204",
+                    "highSexmediumEgomediumPowerhighIdentitylowObjects":"205",
+                    "highSexmediumEgomediumPowerhighIdentitymediumObjects":"206",
+                    "highSexmediumEgomediumPowerhighIdentityhighObjects":"207",
+                    "highSexmediumEgohighPowerlowIdentitylowObjects":"208",
+                    "highSexmediumEgohighPowerlowIdentitymediumObjects":"209",
+                    "highSexmediumEgohighPowerlowIdentityhighObjects":"210",
+                    "highSexmediumEgohighPowermediumIdentitylowObjects":"211",
+                    "highSexmediumEgohighPowermediumIdentitymediumObjects":"212",
+                    "highSexmediumEgohighPowermediumIdentityhighObjects":"213",
+                    "highSexmediumEgohighPowerhighIdentitylowObjects":"214",
+                    "highSexmediumEgohighPowerhighIdentitymediumObjects":"215",
+                    "highSexmediumEgohighPowerhighIdentityhighObjects":"216",
+                    "highSexhighEgolowPowerlowIdentitylowObjects":"217",
+                    "highSexhighEgolowPowerlowIdentitymediumObjects":"218",
+                    "highSexhighEgolowPowerlowIdentityhighObjects":"219",
+                    "highSexhighEgolowPowermediumIdentitylowObjects":"220",
+                    "highSexhighEgolowPowermediumIdentitymediumObjects":"221",
+                    "highSexhighEgolowPowermediumIdentityhighObjects":"222",
+                    "highSexhighEgolowPowerhighIdentitylowObjects":"223",
+                    "highSexhighEgolowPowerhighIdentitymediumObjects":"224",
+                    "highSexhighEgolowPowerhighIdentityhighObjects":"225",
+                    "highSexhighEgomediumPowerlowIdentitylowObjects":"226",
+                    "highSexhighEgomediumPowerlowIdentitymediumObjects":"227",
+                    "highSexhighEgomediumPowerlowIdentityhighObjects":"228",
+                    "highSexhighEgomediumPowermediumIdentitylowObjects":"229",
+                    "highSexhighEgomediumPowermediumIdentitymediumObjects":"230",
+                    "highSexhighEgomediumPowermediumIdentityhighObjects":"231",
+                    "highSexhighEgomediumPowerhighIdentitylowObjects":"232",
+                    "highSexhighEgomediumPowerhighIdentitymediumObjects":"233",
+                    "highSexhighEgomediumPowerhighIdentityhighObjects":"234",
+                    "highSexhighEgohighPowerlowIdentitylowObjects":"235",
+                    "highSexhighEgohighPowerlowIdentitymediumObjects":"236",
+                    "highSexhighEgohighPowerlowIdentityhighObjects":"237",
+                    "highSexhighEgohighPowermediumIdentitylowObjects":"238",
+                    "highSexhighEgohighPowermediumIdentitymediumObjects":"239",
+                    "highSexhighEgohighPowermediumIdentityhighObjects":"240",
+                    "highSexhighEgohighPowerhighIdentitylowObjects":"241",
+                    "highSexhighEgohighPowerhighIdentitymediumObjects":"242",
+                    "highSexhighEgohighPowerhighIdentityhighObjects":"243",
                  }
 
-                 const string1 = "Age"; const string2 = "Zodiac"; const string3 = "Mental"; const string4 = "Aura"; const string5 = "Dream";
-                 const userResponse = normalizeAge + string1 + normalizeZodiac + string2 + normalizeMental + string3 + normalizeAura + string4 + normalizeDream + string5;
+                 const string1 = "Sex"; const string2 = "Ego"; const string3 = "Power"; const string4 = "Identity"; const string5 = "Objects";
+                 const userResponse = normalizeSex + string1 + normalizeEgo + string2 + normalizePower + string3 + normalizeIdentity + string4 + normalizeObjects + string5;
                 
                  const rank = referenceData[userResponse];
                  intRank = parseInt(rank);
