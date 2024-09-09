@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            position: relative;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            display: inline-block;
+        }
+
+        .menu-button {
+            font-size: 24px;
+            padding: 10px;
+            background-color: transparent;
+            color: black;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #f8f8f8;
+            position: absolute;
+            top: 55px;
+            right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            width: 150px;
+        }
+
+        .dropdown-menu li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #eee;
+        }
+
+        .container {
+            display: flex;
+            align-items: left;
+            justify-content: left;
+            padding: 20px;
+            flex-wrap: wrap;
+            margin-right: 10%;
+            font-size: larger;
+        }
+
+        .image {
+            width: 40%;
+            max-width: 600px;
+            margin-right: 10px;
+            margin-left: -20px;
+            margin-top: -20px;
+        }
+
+        .description {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Styles for small screens */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .image {
+                margin: 0 auto 20px;
+                width: 100%;
+                max-width: 100%;
+                height: 60%;
+            }
+
+            .dropdown-menu {
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- White Header with + Symbol Menu Button -->
+    <header>
+        <h1>Tchana Pierre</h1>
+        <button class="menu-button" onclick="toggleMenu()">+</button>
+    </header>
+
+    <!-- Dropdown Menu for All Screens -->
+    <ul class="dropdown-menu" id="dropdownMenu">
+        <li>Works</li>
+        <li>About</li>
+        <li>Exhibition</li>
+    </ul>
+
+    <!-- Main Content -->
+    <div class="container">
+        <img src="tchanaPierreArt/aboutTchana.jpg" alt="About Image" class="image">
+        <div class="description">
+            <p>Tchana Pierre is a Boston based artist whose work delves into the physical and psychological effects of human emotions on the mind and body. Through his art, Pierre explores how feelings such as love, joy, anxiety, grief and lust manifest within us shaping our perceptions, behaviors and physical forms. Working primarily in acrylic and film, Pierre combines figuration and abstraction to challenge the viewer's understanding of the real and pseudo-real.</p>
+            <p>Growing up in Cameroon, Pierre was exposed to a synthesis of music, dance, and film. This plethora of cultural phenomena has been ever present in his work. In his paintings, Pierre employs a dynamic use of color and texture to convey the fragility of the body and mind. His films expand on these themes, using non-linear storytelling and found footage to explore the subconscious relation between people, places and the objects that punctuate time.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('dropdownMenu');
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        }
+
+        // Optional: Close the dropdown if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === 'block') {
+                        openDropdown.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>
