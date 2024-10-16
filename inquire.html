@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Inquiry</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f2f2f7;
+            margin: 8px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .inquiry-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 1px solid #d1d1d6;
+        }
+        .inquiry-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1c1c1e;
+        }
+        .inquiry-form label {
+            font-size: 16px;
+            color: #3a3a3c;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 500;
+        }
+        .inquiry-form input,
+        .inquiry-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #d1d1d6;
+            border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
+            color: #3a3a3c;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .inquiry-form input:focus,
+        .inquiry-form textarea:focus {
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+            background-color: #fff;
+        }
+        .inquiry-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .inquiry-form button {
+            width: 100%;
+            padding: 14px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .inquiry-form button:hover {
+            background-color: #005bb5;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #8e8e93;
+        }
+    </style>
+</head>
+<body>
+
+    <form class="inquiry-form" action="mailto:oooctober08@gmail.com" method="GET" enctype="text/plain">
+       
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="art-title">Art Title:</label>
+        <input type="text" id="art-title" name="art-title" required>
+
+        <label for="additional-info">Additional Info:</label>
+        <textarea id="additional-info" name="additional-info" placeholder="Any additional information you'd like to provide"></textarea>
+
+        <button type="submit">Submit Inquiry</button>
+    </form>
+
+    <div class="footer">
+        Please allow 3-5 business days for a response to your inquiry.
+    </div>
+
+</body>
+</html>
