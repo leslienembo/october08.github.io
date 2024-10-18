@@ -85,11 +85,26 @@
             color: #8e8e93;
         }
     </style>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const location = document.getElementById('location').value;
+            const email = document.getElementById('email').value;
+            const artTitle = document.getElementById('art-title').value;
+            const additionalInfo = document.getElementById('additional-info').value;
+
+            const subject = encodeURIComponent(`${artTitle} Art Inquiry`);
+            const body = encodeURIComponent(`Name: ${name}\nLocation: ${location}\nArt Title: ${artTitle}\nAdditional Info: ${additionalInfo}`);
+
+            window.location.href = `mailto:oooctober08@gmail.com?subject=${subject}&body=${body}`;
+        }
+    </script>
 </head>
 <body>
 
-    <form class="inquiry-form" action="mailto:oooctober08@gmail.com" method="GET" enctype="text/plain">
-       
+    <form class="inquiry-form" onsubmit="submitForm(event)">
+        <h2>Inquire About Art</h2>
         
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
