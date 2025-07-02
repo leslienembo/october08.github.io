@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCHANA PIERRE — ONLY I KNOW THE PLANS I HAVE FOR YOU</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      gap: 30px;
+      min-height: 100vh;
+    }
+
+    .box {
+      border: 2px solid white;
+      width: 100%;
+      max-width: 500px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box-top {
+      padding: 15px;
+    }
+
+    .box-bottom {
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .button {
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: white;
+      color: black;
+    }
+
+    .rotating-circle {
+      width: 200px;
+      height: 200px;
+      animation: rotate 12s linear infinite;
+      position: relative;
+    }
+
+    .circle-text svg {
+      width: 200px;
+      height: 200px;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 20;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+      color: white;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background-color: transparent;
+      border: 2px solid white;
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    .close-button {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      .box-bottom {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .rotating-circle {
+        width: 180px;
+        height: 180px;
+      }
+
+      .circle-text svg {
+        width: 180px;
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- Top Box -->
+    <div class="box">
+      <div class="box-top">
+        <h2>Exhibition Opening</h2>
+        <p>"Only I Know The Plans I Have For You" - Exhibition by Tchana Pierre. Public opening July 11 at Skntones Minneapolis, Minnesota.</p>
+      </div>
+      <div class="box-bottom">
+        <a class="button" href="https://www.eventbrite.com/e/tchanna-pierre-only-i-know-the-plans-i-have-for-you-tickets-1448273999519?aff=ebdsshcopyurl&utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing" target="_blank">RSVP</a>
+        <div class="spacer"></div>
+        <button class="button" onclick="openModal('modal1')">Details</button>
+      </div>
+    </div>
+
+    <!-- Rotating Text -->
+    <div class="rotating-circle">
+      <div class="circle-text">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <path id="circlePath" d="M100,100 m-85,0 a85,85 0 1,1 170,0 a85,85 0 1,1 -170,0" />
+          </defs>
+          <text font-size="8" fill="white">
+            <textPath href="#circlePath">
+              TCHANA PIERRE — ONLY I KNOW THE PLANS I HAVE FOR YOU • TCHANA PIERRE — ONLY I KNOW THE PLANS I HAVE FOR YOU •
+            </textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Bottom Box -->
+    <div class="box">
+      <div class="box-top">
+        <h2>EXHIBITION AFTER-PARTY</h2>
+        <p>Event after-party hosted by 'Skntones' in collaboration with 'Sound Pollution' and 'Artropolis'</p>
+      </div>
+      <div class="box-bottom">
+        <button class="button" onclick="handleRSVP()">RSVP</button>
+        <div class="spacer"></div>
+        <button class="button" onclick="openModal('modal2')">Details</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modals -->
+  <div id="modal1" class="modal" onclick="closeModal('modal1')">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal('modal1')">&times;</span>
+      <p><strong>Exhibition Opening</strong><br><br>This exhibition will feature works made by Tchana Pierre over a week-long residence at Skntones, examining how internalized mental states take on physical form.</p>
+    </div>
+  </div>
+
+  <div id="modal2" class="modal" onclick="closeModal('modal2')">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal('modal2')">&times;</span>
+      <p><strong>Exhibition after-party</strong><br><br>A live DJ set of Afro-house, techno and Brazilian funk grooves curated by 'Sound Pollution' and 'Artropolis' to conclude an evening of art - returning to the concept of "the body as an unbiased witness" </p>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function handleRSVP() {
+      const passcode = prompt("Enter passcode to access RSVP:");
+      if (passcode === "tchana") {
+        window.location.href = "https://www.eventbrite.com/e/only-i-know-the-plans-i-have-for-you-exhibition-opening-after-party-tickets-1458524468949?aff=oddtdtcreator";
+      } else if (passcode !== null) {
+        alert("Incorrect passcode. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
